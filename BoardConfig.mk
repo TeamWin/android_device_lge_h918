@@ -91,7 +91,7 @@ TARGET_CRYPTFS_HW_PATH := $(DEVICE_TREE)/cryptfs_hw
 # Debug flags
 TWRP_INCLUDE_LOGCAT := true
 
-TW_DEVICE_VERSION := 1
+#TW_DEVICE_VERSION := 0
 #TW_CRYPTO_SYSTEM_VOLD_DEBUG := true
 TARGET_RECOVERY_DEVICE_MODULES := zip kdzwriter strace
 #TARGET_CRYPTFS_HW_PATH := vendor/qcom/opensource/cryptfs_hw
