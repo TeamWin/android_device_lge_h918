@@ -26,8 +26,11 @@ if [ -z "$checked" ]; then
 	umount /system
 	export checked=1
 fi
+until grep -m 1 "Fixup_Time" /tmp/recovery.log; do
+	sleep 1
+done
 case $rom in
-	stock) exit;; #stock will be fine
+	stock) exit;; #stock will be fine, should have exited above anyway
 	lin14)		export year=`expr $year - 46`
 		if [[ $year -ge 2030 ]]; then
 			exit
@@ -38,7 +41,7 @@ case $rom in
 		;;
 	*) #take a guess based on /data/data
 		if [ ! -d /data/data ]; then
-			sleep 7
+			sleep 12
 			if [ ! -d /data/data ]; then
 				exit #data not mounted, give up
 			fi
