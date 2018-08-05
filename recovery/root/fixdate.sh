@@ -12,6 +12,9 @@ sleep 2
 export year=`date +%Y`
 export checked=$1
 export rom=$2
+
+export fixed=$3; if [ -z "$fixed" ]; then export fixed=0; fi
+echo $fixed
 if [ -z "$checked" ]; then
 #check if a stock rom and set a flag so it wont recheck on the same boot
 	mount /system -o ro
@@ -37,7 +40,7 @@ case $rom in
 		fi
 		#lineage 14 had date 46 years in the future but otherwise correct
 		date $(date +%m%d%H%M)$year.$(date +%S)
-		export fixed=1
+		export fixed=$(expr 1 + "$fixed")
 		;;
 	*) #take a guess based on /data/data
 		if [ ! -d /data/data ]; then
@@ -52,7 +55,7 @@ case $rom in
 			export dir='/data/media/0'
 		fi
 		date $(date -r $dir +%m%d%H%M%Y)
-		export fixed=1
+		export fixed=$(expr 1 + "$fixed")
 		;;
 esac
 ##On superv20 us996 10o I had it come up 2017 so handling this case
@@ -63,8 +66,9 @@ esac
 sleep 4
 # Now not sure about the next comment, so being more aggressive and checking every 6 seconds.
 #date gets switched back to 1972 20 seconds after twrp starts so waiting 19 seconds + 2 seconds to fix on the next run
-if [ ! -z $fixed ]; then
-	exit
+echo $fixed
+if [  $fixed  -eq 2 ]; then
+	exit #runscript twice because twrp runs its own fixup twice if data is encrypted
 fi
-exec /fixdate.sh "$checked" "$rom"
+exec /fixdate.sh "$checked" "$rom" "$fixed"
 
