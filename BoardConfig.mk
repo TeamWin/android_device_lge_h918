@@ -68,11 +68,16 @@ TW_SCREEN_BLANK_ON_BOOT := true
 TW_INCLUDE_NTFS_3G := true
 TW_IGNORE_MISC_WIPE_DATA := true
 # Shift TWRP off the secondary screen
-#TW_Y_OFFSET := 160
-#TW_H_OFFSET := -160
+#top
+#TW_Y_OFFSET := 35
 
-TW_CLOCK_OFFSET := -1451606400
-#TW_CLOCK_OFFSET := -1385672400
+#Bottom
+#TW_H_OFFSET := -35
+# Lineage 14's era is mostly over, making stock right and lin15 more correct
+#TW_CLOCK_OFFSET := -1451606400
+#US996 offset 46 years
+#H918 TW_CLOCK_OFFSET := -1385672400
+
 
 # exFAT drivers no longer included in the kernel
 TW_NO_EXFAT_FUSE := false

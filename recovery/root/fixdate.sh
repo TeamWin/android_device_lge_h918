@@ -11,30 +11,48 @@ sleep 2
 
 export year=`date +%Y`
 export checked=$1
+export rom=$2
 if [ -z "$checked"]; then
 #check if a stock rom and set a flag so it wont recheck on the same boot
 	mount /system -o ro
-	grep lge.swversion /system/build.prop
-	if (( $? != 0 )); then
+	if grep lge.swversion /system/build.prop ; then
+		export rom='stock'
 		exit
+	elif grep ro.cm.build.version /system/build.prop; then
+		export rom='lin14'
+	else  #lin15 or other
+		export rom='other'
 	fi
 	umount /system
 	export checked=1
 fi
-export year=`expr $year + 46`
-if [[ $year -ge 2030 ]]; then
-	exit
-fi
-date $(date +%m%d%H%M)$year.$(date +%S)
-fi
+case $rom in
+	stock) exit;; #stock will be fine
+	lin14)		export year=`expr $year - 46`
+		if [[ $year -ge 2030 ]]; then
+			exit
+		fi
+		#lineage 14 had date 46 years in the future but otherwise correct
+		date $(date +%m%d%H%M)$year.$(date +%S)
+		fi
+		;;
+	*) #take a guess based on /data/data
+		if [ ! -d /data/data ]; then
+			sleep 4
+			if [ ! -d /data/data ]; then
+				exit #data not mounted, give up
+			fi
+		fi
+		date $(date -r /data/data +%m%d%H%M%Y)
+		;;
+esac
 ##On superv20 us996 10o I had it come up 2017 so handling this case
 #if [ `date +%Y` -eq 2017 ]
 #then
 #date $(date +%m%d%H%M)2018.$(date +%S)
 #echo "Did 2017 date nudge" >>/twrp-date.log
-fi
 sleep 4
 # Now not sure about the next comment, so being more aggressive and checking every 6 seconds.
 #date gets switched back to 1972 20 seconds after twrp starts so waiting 19 seconds + 2 seconds to fix on the next run
-exec /fixdate.sh $checked
+exec /fixdate.sh $checked $rom
 
