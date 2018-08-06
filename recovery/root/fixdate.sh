@@ -33,6 +33,7 @@ until grep -m 1 "Fixup_Time" /tmp/recovery.log; do
 done
 case $rom in
 	stock) #stock will be mostly fine, year might be off so lets fix
+		#possibly just an alpha kernel bug?
 		if [ ! -d /data/data ]; then
 			sleep 12
 			if [ ! -d /data/date ]; then
