@@ -38,6 +38,8 @@ on boot
     write /sys/devices/soc/900000.qcom,mdss_mdp/900000.qcom,mdss_mdp:qcom,mdss_fb_primary/leds/lcd-backlight-ex/brightness 0
     chmod 0750 /fixdate.sh
     chmod 0750 /datediag.sh
+    chmod 0750 /vendor.sh
+    start vendor
     start fixdate
     start datediag
 on fs
@@ -46,5 +48,3 @@ on fs
     chown system drmrpc /dev/qseecom
     chmod 0664 /dev/ion
     chown system system /dev/ion
-	chmod 0750 /vendor.sh
-	start vendor
