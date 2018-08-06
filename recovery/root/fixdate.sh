@@ -20,7 +20,6 @@ if [ -z "$checked" ]; then
 	mount /system -o ro
 	if grep lge.swversion /system/build.prop ; then
 		export rom='stock'
-		exit
 	elif grep ro.cm.build.version /system/build.prop; then
 		export rom='lin14'
 	else  #lin15 or other
@@ -33,9 +32,23 @@ until grep -m 1 "Fixup_Time" /tmp/recovery.log; do
 	sleep 1
 done
 case $rom in
-	stock) exit;; #stock will be fine, should have exited above anyway
+	stock) #stock will be mostly fine, year might be off so lets fix
+		if [ ! -d /data/data ]; then
+			sleep 12
+			if [ ! -d /data/date ]; then
+				exit #data not mounted, giving up
+			fi
+		fi
+		if [ `date -r /data/data +%Y` -gt `date -r /data/media/0 +%Y` ]; then
+			export dir='/data/data'
+		else
+			export dir='/data/media/0'
+		fi
+		date $(date +%m%d%H%M)$(date -r $dir +%Y)
+		;;
+
 	lin14)		export year=`expr $year - 46`
-		if [[ $year -ge 2030 ]]; then
+		if [[ $year -lt 2018 ]]; then
 			exit
 		fi
 		#lineage 14 had date 46 years in the future but otherwise correct
