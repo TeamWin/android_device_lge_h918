@@ -13,5 +13,6 @@ echo $x `date` >>$datelog
 mkdir /sdcard/TWRP
 cp $datelog /sdcard/TWRP/
 chmod 0666 /sdcard/TWRP$datelog
+chmod 777 /sdcard/TWRP #unhide folder so log can be seen
 sleep 1
 done
