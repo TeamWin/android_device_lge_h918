@@ -1,9 +1,10 @@
 #!/sbin/ash
-if [ -e /dev/block/bootdevice/by-name/vendor ]; then
-echo '/dev/block/bootdevice/by-name/vendor	/vendor	ext4	ro	wait'>>/fstab.elsa
-if [ ! -d /vendor ]; then
-	if [ -e /vendor ]; then
-	rm /vendor
+if [ `blkid /dev/block/bootdevice/by-name/vendor | grep -c ext4` -ge 1 ] ; then
+	echo '/dev/block/bootdevice/by-name/vendor	/vendor	ext4	ro	wait'>>/fstab.elsa
+	if [ ! -d /vendor ]; then # if not a directory, it either doesnt exist or is a symlink
+		if [ -e /vendor ]; then
+			rm /vendor
+		fi
 	fi
 mkdir /vendor
 fi
