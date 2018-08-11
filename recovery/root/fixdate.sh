@@ -57,6 +57,10 @@ case $rom in
 		export fixed=$(expr 1 + "$fixed")
 		;;
 	*) #take a guess based on /data/data
+		if [ $(date +%Y) -ge 2018 ]; then
+			export fixed=2 #if the year is correct leave it alone
+			exit
+		fi
 		if [ ! -d /data/data ]; then
 			sleep 12
 			if [ ! -d /data/data ]; then
