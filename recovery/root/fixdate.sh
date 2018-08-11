@@ -22,7 +22,9 @@ if [ -z "$checked" ]; then
 		export rom='stock'
 	elif grep ro.cm.build.version /system/build.prop; then
 		export rom='lin14'
-	else  #lin15 or other
+	elif grep 'ro.lineage.build.version=15.1' /system/build.prop; then
+		export rom='lin15'
+	else #other
 		export rom='other'
 	fi
 	umount /system
@@ -56,6 +58,13 @@ case $rom in
 		date $(date +%m%d%H%M)$year.$(date +%S)
 		export fixed=$(expr 1 + "$fixed")
 		;;
+	lin15)		export year=`expr $year - 47`
+		if [[ $year -lt 2018 ]]; then
+			exit
+		fi
+		date $(date +%m%d%H%M)$year.$(date +%S)
+		export fixed=$(expr 1 + "$fixed")
+	;;
 	*) #take a guess based on /data/data
 		if [ $(date +%Y) -ge 2018 ]; then
 			export fixed=2 #if the year is correct leave it alone
