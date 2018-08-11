@@ -1,7 +1,6 @@
-#!/sbin/ash
-#This script fixes the time in TWRP for stock rom users
-#stock and Lineage seem to produce ats files with different epochs and by default
-#I made Lineage's time accurate
+#!/sbin/sh
+#This script fixes the time in TWRP for Lineage rom users
+#stock and Lineage seem to produce ats files with different epochs
 
 until pids=$(pidof recovery)
 do
@@ -97,5 +96,5 @@ echo $fixed
 if [  $fixed  -eq 2 ]; then
 	exit #runscript twice because twrp runs its own fixup twice if data is encrypted
 fi
-exec /fixdate.sh "$checked" "$rom" "$fixed"
+exec /sbin/fixdate.sh "$checked" "$rom" "$fixed"
 
