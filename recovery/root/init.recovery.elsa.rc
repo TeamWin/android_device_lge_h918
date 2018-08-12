@@ -2,26 +2,26 @@ on property:ro.crypto.state=encrypted
 	chmod 0750 /qseecom.sh
 	start qseecom
 
-service qseecom /sbin/ash /qseecom.sh
+service qseecom /sbin/sh /sbin/qseecom.sh
 	disabled
 	user root
 	group root
 	seclabel u:r:recovery:s0
 
-service fixdate /sbin/ash /fixdate.sh
+service fixdate /sbin/sh /sbin/fixdate.sh
 	oneshot
 	disabled
 	user root
 	group root
 	seclabel u:r:recovery:s0
-service datediag /sbin/ash /datediag.sh
+service datediag /sbin/sh /sbin/datediag.sh
 	oneshot
 	disabled
 	user root
 	group root
 	seclabel u:r:recovery:s0
 
-service vendor /sbin/ash /vendor.sh
+service vendor /sbin/sh /sbin/vendor.sh
 	oneshot
 	disabled
 	user root
@@ -36,9 +36,9 @@ on boot
 
     # dim the secondary screen backlight as best as we can
     write /sys/devices/soc/900000.qcom,mdss_mdp/900000.qcom,mdss_mdp:qcom,mdss_fb_primary/leds/lcd-backlight-ex/brightness 0
-    chmod 0750 /fixdate.sh
-    chmod 0750 /datediag.sh
-    chmod 0750 /vendor.sh
+    chmod 0750 /sbin/fixdate.sh
+    chmod 0750 /sbin/datediag.sh
+    chmod 0750 /sbin/vendor.sh
     start vendor
     start fixdate
     start datediag
