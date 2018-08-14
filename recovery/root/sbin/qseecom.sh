@@ -1,6 +1,6 @@
 #!/sbin/sh
 while [ "$(getprop ro.crypto.fs_crypto_blkdev)" != "/dev/block/dm-0" ]; do
-	if [ ! -d /system/etc ]; then #mount system if not already mounted
+	if [ ! -f /system/build.prop ]; then #mount system if not already mounted
       		mount /system -o ro
 	fi
         if blkid /dev/block/bootdevice/by-name/vendor | grep ext4; then
@@ -35,6 +35,6 @@ while [ "$(getprop ro.crypto.fs_crypto_blkdev)" != "/dev/block/dm-0" ]; do
 #	done
 #	exec /sbin/sh /sbin/qseecom.sh
 done
-if [ -d /system/etc ]; then
-	umount /system
+if [ -f /system/build.prop ]; then
+#	umount /system
 fi
