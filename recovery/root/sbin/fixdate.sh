@@ -26,7 +26,7 @@ if [ -z "$checked" ]; then
 	else #other
 		export rom='other'
 	fi
-	umount /system
+#	umount /system
 	export checked=1
 fi
 until grep -m 1 "Fixup_Time" /tmp/recovery.log; do

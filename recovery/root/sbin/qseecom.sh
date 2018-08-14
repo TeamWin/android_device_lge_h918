@@ -36,5 +36,5 @@ while [ "$(getprop ro.crypto.fs_crypto_blkdev)" != "/dev/block/dm-0" ]; do
 #	exec /sbin/sh /sbin/qseecom.sh
 done
 if [ -d /system/etc ]; then
-	umount /system
+#	umount /system
 fi
