@@ -12,6 +12,9 @@ while [ "$(getprop ro.crypto.fs_crypto_blkdev)" != "/dev/block/dm-0" ]; do
 		fi
                 mount /dev/block/bootdevice/by-name/vendor /vendor -t ext4 -o ro
         else
+		if [ -d /vendor ]; then
+			rmdir /vendor
+		fi
 		if [ ! -L /vendor ]; then
         		ln -s /system/vendor /vendor #if no vendor partition symlink it
 		fi

@@ -21,12 +21,6 @@ service datediag /sbin/sh /sbin/datediag.sh
 	group root
 	seclabel u:r:recovery:s0
 
-service vendor /sbin/sh /sbin/vendor.sh
-	oneshot
-	disabled
-	user root
-	group root
-	seclabel u:r:recovery:s0
 on boot
     # save battery by switching to interactive once booted
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
@@ -39,7 +33,6 @@ on boot
     chmod 0750 /sbin/fixdate.sh
     chmod 0750 /sbin/datediag.sh
     chmod 0750 /sbin/vendor.sh
-    start vendor
     start fixdate
     start datediag
 on fs
