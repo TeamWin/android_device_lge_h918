@@ -16,11 +16,15 @@ export fixed=$3; if [ -z "$fixed" ]; then export fixed=0; fi
 echo $fixed
 if [ -z "$checked" ]; then
 #check if a stock rom and set a flag so it wont recheck on the same boot
-	mount /system -o ro
+	if [ ! -f /system/build.prop ]; then
+		mount /system -o ro
+	fi
 	if grep lge.swversion /system/build.prop ; then
 		export rom='stock'
 	elif grep ro.cm.build.version /system/build.prop; then
 		export rom='lin14'
+	elif [ $(grep ro.build.version.release /system/build.prop | awk -F = '{print $2}' | awk -F . -v OFS='' '{print $1,$2}') -ge 81 ]; then
+		export rom='aosp-oreo' #assume anything 8.1+ uses a similar kernel to lineage 15.1
 	elif grep 'ro.lineage.build.version=15.1' /system/build.prop; then
 		export rom='lin15'
 	else #other
@@ -57,7 +61,8 @@ case $rom in
 		date $(date +%m%d%H%M)$year.$(date +%S)
 		export fixed=$(expr 1 + "$fixed")
 		;;
-	lin15)		export year=`expr $year - 47`
+	lin15 | aosp-oreo ) #assume anything oreo 8.1+ is using lineage 15's offset or at least close
+		export year=`expr $year - 47`
 		if [[ $year -lt 2018 ]]; then
 			exit
 		fi

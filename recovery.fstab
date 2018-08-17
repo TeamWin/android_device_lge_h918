@@ -17,4 +17,6 @@
 /persist	ext4	/dev/block/bootdevice/by-name/persist	flags=display="Persist";flashimg
 /external_sd	vfat	/dev/block/mmcblk0p1 /dev/block/mmcblk0	flags=storage;wipeingui;removable;encryptable=/dev/block/bootdevice/by-name/encrypt
 /usb-otg	vfat	/dev/block/sdh* /dev/block/sdh		flags=storage;wipeingui;removable
-#/vendor		ext4	/dev/block/bootdevice/by-name/vendor	
+/vendor		ext4	/dev/block/bootdevice/by-name/vendor	flags=removable;backup=1
+/vendor_image	emmc	/dev/block/bootdevice/by-name/vendor	flags=removable;backup=0;flashimg
+
