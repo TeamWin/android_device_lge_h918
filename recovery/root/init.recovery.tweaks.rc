@@ -1,6 +1,6 @@
 # enable blu_active & tweaks
 
-on property:sys.post_boot.parsed=1
+on boot
 
     # Set GPU idle to 133 Mhz
     write /sys/class/kgsl/kgsl-3d0/default_pwrlevel 6
@@ -64,4 +64,4 @@ on property:sys.post_boot.parsed=1
     write /sys/block/sdg/queue/scheduler "maple"
     write /sys/block/sdh/queue/scheduler "maple"
 
-    write /dev/kmsg "Boot completed"
+    write /dev/kmsg "Tweaks done"

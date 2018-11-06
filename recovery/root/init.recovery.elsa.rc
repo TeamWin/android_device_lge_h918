@@ -23,10 +23,11 @@ service datediag /sbin/sh /sbin/datediag.sh
 
 on boot
     # save battery by switching to interactive once booted
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor interactive
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor interactive
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor interactive
+# now using maple in init.recovery.tweaks.rc
+#    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
+#    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor interactive
+#    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor interactive
+#    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor interactive
 
     # dim the secondary screen backlight as best as we can
     write /sys/devices/soc/900000.qcom,mdss_mdp/900000.qcom,mdss_mdp:qcom,mdss_fb_primary/leds/lcd-backlight-ex/brightness 0
