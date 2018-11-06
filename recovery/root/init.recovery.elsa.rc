@@ -1,3 +1,5 @@
+import /init.recovery.tweaks.rc
+
 on property:ro.crypto.state=encrypted
 	chmod 0750 /qseecom.sh
 	start qseecom
